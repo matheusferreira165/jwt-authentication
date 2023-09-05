@@ -126,7 +126,6 @@ func User(w http.ResponseWriter, r *http.Request) {
 	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
-
 	if err != nil {
 
 		statusUnauthorized := struct {
@@ -143,9 +142,28 @@ func User(w http.ResponseWriter, r *http.Request) {
 	claims := token.Claims.(*jwt.StandardClaims)
 
 	var user models.User
-
 	database.DB.Where("id = ?", claims.Issuer).First(&user)
-
 	json.NewEncoder(w).Encode(user)
+
+}
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	cookie := http.Cookie{
+		Name:     "jwt",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: true,
+	}
+	http.SetCookie(w, &cookie)
+
+	sucess := struct {
+		Message string `json:"message"`
+	}{
+		Message: "sucess",
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(sucess)
 
 }
