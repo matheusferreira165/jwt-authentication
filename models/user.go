@@ -4,7 +4,7 @@ type User struct {
 	Id       uint   `json:"id"`
 	Name     string `json:"name"`
 	Email    string `gorm:"unique" json:"email"`
-	Password string `json:"password"`
+	Password string `json:"-"`
 }
 
 type LoginRequest struct {
