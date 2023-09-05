@@ -140,8 +140,12 @@ func User(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claims := token.Claims
+	claims := token.Claims.(*jwt.StandardClaims)
 
-	json.NewEncoder(w).Encode(claims)
+	var user models.User
+
+	database.DB.Where("id = ?", claims.Issuer).First(&user)
+
+	json.NewEncoder(w).Encode(user)
 
 }
