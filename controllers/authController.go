@@ -56,7 +56,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	var userResponse models.User
 
-	database.DB.Where("email = ?", loginRequest.Email).First(&userResponse)
+	database.DB.Where("email = ?", &loginRequest.Email).First(&userResponse)
 
 	if userResponse.Id == 0 {
 
@@ -121,11 +121,23 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func User(w http.ResponseWriter, r *http.Request) {
 
-	cookie, _ := r.Cookie("jwt")
+	cookie, err := r.Cookie("jwt")
+	if err != nil {
+		notLogged := struct {
+			Message string `json:"message"`
+		}{
+			Message: "not logged",
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(notLogged)
+
+		return
+	}
 
 	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
+
 	if err != nil {
 
 		statusUnauthorized := struct {
@@ -151,7 +163,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:     "jwt",
 		Value:    "",
-		Expires:  time.Now().Add(-time.Hour),
+		Expires:  time.Now(),
 		HttpOnly: true,
 	}
 	http.SetCookie(w, &cookie)
