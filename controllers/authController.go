@@ -51,12 +51,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 
-	var userRequest models.User
-	json.Unmarshal(data, &userRequest)
+	var loginRequest models.LoginRequest
+	json.Unmarshal(data, &loginRequest)
 
 	var userResponse models.User
 
-	database.DB.Where("email = ?", userRequest.Email).First(&userResponse)
+	database.DB.Where("email = ?", loginRequest.Email).First(&userResponse)
 
 	if userResponse.Id == 0 {
 
@@ -71,7 +71,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(userResponse.Password), []byte(userRequest.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(userResponse.Password), []byte(loginRequest.Password)); err != nil {
 		incorrectPassMessage := struct {
 			Message string `json:"message"`
 		}{
