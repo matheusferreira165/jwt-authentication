@@ -3,21 +3,13 @@ package main
 import (
 	"net/http"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"github.com/matheusferreira165/jwt-authentication/database"
+	"github.com/matheusferreira165/jwt-authentication/routes"
 )
 
 func main() {
-
-	conn, err := gorm.Open(postgres.Open(""), &gorm.Config{})
-
-	if err != nil {
-		panic("could not connect to the database")
-	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World"))
-	})
+	database.Connect()
+	routes.Setup()
 
 	http.ListenAndServe(":3000", nil)
 }
