@@ -16,5 +16,6 @@ func Setup() {
 	http.HandleFunc("/api/v1/register", controllers.Register)
 	http.HandleFunc("/api/v1/login", controllers.Login)
 	http.HandleFunc("/api/v1/user", controllers.User)
+	http.HandleFunc("/api/v1/logout", controllers.Logout)
 	http.Handle("/", c.Handler(http.DefaultServeMux))
 }
