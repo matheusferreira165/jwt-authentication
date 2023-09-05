@@ -123,4 +123,25 @@ func User(w http.ResponseWriter, r *http.Request) {
 
 	cookie, _ := r.Cookie("jwt")
 
+	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+
+		statusUnauthorized := struct {
+			Message string `json:"message"`
+		}{
+			Message: "unauthentication",
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(statusUnauthorized)
+
+		return
+	}
+
+	claims := token.Claims
+
+	json.NewEncoder(w).Encode(claims)
+
 }
