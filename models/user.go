@@ -1,10 +1,16 @@
 package models
 
+type UserResponse struct {
+	Id    uint   `json:"id"`
+	Name  string `json:"name"`
+	Email string `gorm:"unique" json:"email"`
+}
+
 type User struct {
 	Id       uint   `json:"id"`
 	Name     string `json:"name"`
 	Email    string `gorm:"unique" json:"email"`
-	Password string `json:"-"`
+	Password string `json:"password"`
 }
 
 type LoginRequest struct {
