@@ -27,17 +27,22 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
+
 	json.Unmarshal(data, &user)
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
 	user.Password = string(hashedPassword)
-
-	userJson, _ := json.Marshal(user)
 
 	database.DB.Create(&user)
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	w.Write(userJson)
+	sucess := struct {
+		Message string `json:"message"`
+	}{
+		Message: "sucess",
+	}
+
+	json.NewEncoder(w).Encode(sucess)
 
 }
 
@@ -122,6 +127,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 func User(w http.ResponseWriter, r *http.Request) {
 
 	cookie, err := r.Cookie("jwt")
+
 	if err != nil {
 		notLogged := struct {
 			Message string `json:"message"`
@@ -155,7 +161,12 @@ func User(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
 	database.DB.Where("id = ?", claims.Issuer).First(&user)
-	json.NewEncoder(w).Encode(user)
+
+	json.NewEncoder(w).Encode(models.UserResponse{
+		Id:    user.Id,
+		Name:  user.Name,
+		Email: user.Email,
+	})
 
 }
 
