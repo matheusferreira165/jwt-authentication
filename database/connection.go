@@ -19,15 +19,14 @@ func Connect() {
 		log.Fatal("Erro ao carregar o arquivo .env")
 	}
 
-	// Recupera as variáveis de ambiente
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 
-	// Constrói a string de conexão com o banco de dados
-	dns := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", dbHost, dbPort, dbName, dbUser, dbPassword)
+	// Constrói a URL de conexão com o banco de dados PostgreSQL
+	dns := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
 
 	conn, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
