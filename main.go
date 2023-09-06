@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/matheusferreira165/jwt-authentication/database"
@@ -10,6 +11,6 @@ import (
 func main() {
 	database.Connect()
 	routes.Setup()
-
+	fmt.Println("Servidor Iniciado")
 	http.ListenAndServe(":3000", nil)
 }
