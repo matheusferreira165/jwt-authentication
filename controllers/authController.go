@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -20,7 +20,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -45,7 +45,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 
 	if err != nil {
 		log.Fatalln(err)
