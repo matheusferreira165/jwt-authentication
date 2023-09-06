@@ -27,4 +27,5 @@ services:
 
 networks:
   jwtnet:
+    name: jwtnet
     driver: bridge
