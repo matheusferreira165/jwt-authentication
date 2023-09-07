@@ -31,7 +31,7 @@ DB_PASSWORD=
 
 ### Utilizando Docker Compose
 
-Certifique-se de que o docker e docker-compose esta instalado na maquina
+Certifique-se de que o docker e docker-compose estao instalados na maquina, mais informacoes em: https://docs.docker.com/get-docker/
 
 ```bash
 docker-compose up
