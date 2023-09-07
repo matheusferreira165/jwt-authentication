@@ -162,6 +162,8 @@ func User(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	database.DB.Where("id = ?", claims.Issuer).First(&user)
 
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(models.UserResponse{
 		Id:    user.Id,
 		Name:  user.Name,
