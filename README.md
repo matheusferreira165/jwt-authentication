@@ -54,7 +54,7 @@ Isso iniciará o aplicativo, incluindo a api e o db PostgreSQL, em containers Do
 Após a instalação e execução bem-sucedidas, você pode usar a API para realizar a autenticação com JWT. Aqui estão algumas operações de exemplo:
 
 - **Registrar um usuário:** Envie uma solicitação POST para `/api/v1/register` com os dados do usuário EX:
-   ```bash
+   ```json
    {
 	"name": "Rosa",
 	"email": "rosa@gmail.com",
@@ -88,13 +88,13 @@ Após a instalação e execução bem-sucedidas, você pode usar a API para real
 	"message": "not logged"
    }
   ```
- Usuario nao autorizado:
+  Usuario nao autorizado:
   ```json
     {
 	"message": "unauthentication"
     }
   ```
-**Deslogar:** Envie uma solicitação GET para `/api/v1/logout` com suas credenciais para obter um token JWT
+  **Deslogar:** Envie uma solicitação GET para `/api/v1/logout` com suas credenciais para obter um token JWT
 
 ### Tecnologias Utilizadas
 
