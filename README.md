@@ -42,7 +42,7 @@ Isso iniciará o aplicativo, incluindo a api e o db PostgreSQL, em containers Do
 1. Instale o Postgres, mais informacoes em: https://www.postgresql.org/download/
 2. Fazer a build do projeto
     ```bash 
-        go build -o server
+    go build -o server
     ```
 3. Executar o arquivo gerado
    ```bash
