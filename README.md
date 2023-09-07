@@ -94,7 +94,7 @@ Após a instalação e execução bem-sucedidas, você pode usar a API para real
 	"message": "unauthentication"
     }
   ```
-  **Deslogar:** Envie uma solicitação GET para `/api/v1/logout` com suas credenciais para obter um token JWT
+- **Deslogar:** Envie uma solicitação GET para `/api/v1/logout` com suas credenciais para obter um token JWT
 
 ### Tecnologias Utilizadas
 
