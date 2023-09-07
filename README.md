@@ -1,6 +1,6 @@
 # JWT Authentication
 
-## Subtítulo
+##
 Este projeto tem como objetivo testar a implementação de JSON Web Tokens (JWT) em uma API utilizando a linguagem Go (Golang).
 
 ## Instalação
@@ -34,6 +34,8 @@ DB_PASSWORD=
 Certifique-se de que o docker e docker-compose esta instalado na maquina
 
 ```bash
-git docker-compose up
+docker-compose up
 ```
 Isso iniciará o aplicativo, incluindo a api e o db PostgreSQL, em containers Docker.
+
+### SE
