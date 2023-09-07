@@ -25,7 +25,6 @@ func Connect() {
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 
-	// Constrói a URL de conexão com o banco de dados PostgreSQL
 	dns := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
 
 	conn, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
